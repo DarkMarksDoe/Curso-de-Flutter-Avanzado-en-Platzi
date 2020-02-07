@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzi_trips_app/User/BLoC/bloc_user.dart';
-import 'platzi_trips.dart';
-import 'platzi_trips_cupertino.dart';
 import 'User/UI/Screens/signin_screen.dart';
 void main() => runApp(MyApp());
 
