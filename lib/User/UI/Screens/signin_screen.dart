@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:platzi_trips_app/User/BLoC/bloc_user.dart';
 import 'package:platzi_trips_app/Widgets/button_green.dart';
@@ -35,7 +36,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               ButtonGreen(text: "Login with Gmail",
                 onPressed: (){
-                userBloc.signIn();
+                userBloc.signIn().then((FirebaseUser user) => print("El usuario es: ${user.displayName}"));
               }
               ,width: 300,
                 height: 50,
