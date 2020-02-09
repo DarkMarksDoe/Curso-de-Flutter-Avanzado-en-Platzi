@@ -9,7 +9,6 @@ class CloudFirestoreAPI {
   final Firestore _db = Firestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-
   void updateUserData(User user) async {
     DocumentReference ref = _db.collection(USERS).document(user.uid);
     return ref.setData({
@@ -23,16 +22,28 @@ class CloudFirestoreAPI {
     }, merge: true); //Sería como un commit
   }
 
-  Future <void> updatePlaceData(Place place) async{
+  Future<void> updatePlaceData(Place place) async {
     CollectionReference refPlaces = _db.collection(PLACES);
-    await _auth.currentUser().then((FirebaseUser user){
+    await _auth.currentUser().then((FirebaseUser user) {
       refPlaces.add({
-            'name' : place.name,
-            'description' : place.description,
-            'likes' : place.likes,
-            'urlImage' : place.urlImage,
-            'userOwner' : "${USERS}/${user.uid}"
+        'name': place.name,
+        'description': place.description,
+        'likes': place.likes,
+        'urlImage': place.urlImage,
+        'userOwner':
+            _db.document("${USERS}/${user.uid}") //así asigno a referencias
+      }).then((DocumentReference dr) {
+        dr.get().then((DocumentSnapshot snapshot) {
+          //ID PLACE que acabo de asignar REFERECIA COMO ARRAY
+          DocumentReference refUsers = _db
+              .collection(USERS)
+              .document(user.uid); //Obtener data del usuario que su id es tal
+          refUsers.updateData({
+            'myPlaces': FieldValue.arrayUnion(
+                [_db.document("${PLACES}/${snapshot.documentID}")])
           });
+        });
+      });
     });
   }
 }
