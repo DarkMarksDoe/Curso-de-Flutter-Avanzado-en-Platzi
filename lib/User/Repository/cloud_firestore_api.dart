@@ -23,14 +23,14 @@ class CloudFirestoreAPI {
     }, merge: true); //Sería como un commit
   }
 
-  Future <void> updatePlaceDate(Place place) async{
+  Future <void> updatePlaceData(Place place) async{
     CollectionReference refPlaces = _db.collection(PLACES);
     await _auth.currentUser().then((FirebaseUser user){
       refPlaces.add({
             'name' : place.name,
             'description' : place.description,
-            'url' : place.urlImage,
             'likes' : place.likes,
+            'urlImage' : place.urlImage,
             'userOwner' : "${USERS}/${user.uid}"
           });
     });

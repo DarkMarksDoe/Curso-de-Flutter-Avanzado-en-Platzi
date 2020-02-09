@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:platzi_trips_app/Place/Model/place.dart';
+import 'package:platzi_trips_app/Place/Repository/firebase_storage_repository.dart';
 import 'package:platzi_trips_app/User/Model/user.dart';
 import 'package:platzi_trips_app/User/Repository/cloud_firestore_repository.dart';
 import 'package:platzi_trips_app/User/repository/auth_repository.dart';
@@ -10,11 +15,9 @@ class UserBloc implements Bloc {
   //Flujo de datos - Streams
   //Stream - Firebase
   //StreamController
-  Stream<FirebaseUser> streamFirebase =
-      FirebaseAuth.instance.onAuthStateChanged;
-
+  Stream<FirebaseUser> streamFirebase =FirebaseAuth.instance.onAuthStateChanged;
   Stream<FirebaseUser> get authStatus => streamFirebase;
-
+  Future<FirebaseUser> get currentUser => FirebaseAuth.instance.currentUser();
   //Casos uso
   //1. SignIn a la aplicación Google
   Future<FirebaseUser> signIn() {
@@ -23,9 +26,12 @@ class UserBloc implements Bloc {
 
   //2.0 Registrar usuario en BD
   final _cloudFirestoreRepository = CloudFirestoreRepository();
+  void updateUserData(User user) => _cloudFirestoreRepository.updateUserDataFirestore(user);
 
-  void updateUserData(User user) =>
-      _cloudFirestoreRepository.updateUserDataFirestore(user);
+  //3.0 Subir archivo a Firestorage
+  final _firebaseStorageRepository = FirebaseStorageRepository();
+  Future<StorageUploadTask> uploadFile(String path, File image) => _firebaseStorageRepository.uploadFile(path, image);
+  Future<void> updatePlaceData(Place place) => _cloudFirestoreRepository.updatePlaceData(place);
 
   signOut() {
     _auth_repository.signOut();
