@@ -41,6 +41,13 @@ class UserBloc implements Bloc {
 
   //JALAR MIS DATOS DE LA LISTA MAMALONA
   List<ProfilePlace> buildPlaces(List<DocumentSnapshot> placesListSnapshot) => _cloudFirestoreRepository.buildPlaces(placesListSnapshot);
+  //Pa devolver un query snapshot filtrado por ID
+  Stream<QuerySnapshot>myPlacesListStream(String uid)=>
+      Firestore.instance.collection(CloudFirestoreAPI().PLACES)
+          .where("userOwner",
+          isEqualTo: Firestore.instance.document("${CloudFirestoreAPI().USERS}/${uid}")).snapshots();
+
+
 
     signOut() {
     _auth_repository.signOut();
