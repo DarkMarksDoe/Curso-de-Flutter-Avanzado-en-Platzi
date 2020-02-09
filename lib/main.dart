@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzi_trips_app/User/BLoC/bloc_user.dart';
 import 'User/UI/Screens/signin_screen.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -12,12 +13,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      child: MaterialApp(
-        title: "Flutter Demo",
-        home: SignInScreen(),
-      ),
-      bloc: UserBloc()
-    );
+        child: MaterialApp(
+          title: "Flutter Demo",
+          home: SignInScreen(),
+        ),
+        bloc: UserBloc());
   }
 }
 
