@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:platzi_trips_app/Place/UI/Widgets/card_image.dart';
 import 'package:platzi_trips_app/Place/UI/Widgets/text_input_location.dart';
+import 'package:platzi_trips_app/Widgets/button_purple.dart';
 import 'package:platzi_trips_app/Widgets/gradient_back.dart';
 import 'package:platzi_trips_app/Widgets/text_input.dart';
 import 'package:platzi_trips_app/Widgets/title_header.dart';
@@ -59,7 +61,18 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
             margin: EdgeInsets.only(top: 120.0, bottom: 20.0),
             child: ListView(
               children: <Widget>[
-                Container(), //Foto
+                Container(
+                  margin: EdgeInsets.only(bottom: 20.0),
+                  alignment: Alignment.center,
+                  child: CardImageWithFabIcon(
+                    pathImage: 'assets/img/beach_palm.jpeg',
+                    width: 350.0,
+                    left: 0.0,
+                    onPressedFabIcon: () {  },
+                    iconData: Icons.camera,
+                    height: 250.0,
+                  ),
+                ), //Foto
                 Container(
                   //TextField Title
                   margin: EdgeInsets.only(bottom: 20.0),
@@ -86,10 +99,18 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                     iconData: Icons.location_on,
                     controller: null,
                     hintText: "Add location",
-                  ),
+                  )
+                ),
+                Container(
+                  width: 70.0,
+                  child: ButtonPurple(buttonText: "Add place", onPressed: (){
+                    //Firebase Storage
+                    //URL
+                    //Cloud Firestore
+                    //Place - Title, description, url, userOwner, likes
+                  }),
                 )
-
-              ],
+              ]
             ),
           )
         ],
