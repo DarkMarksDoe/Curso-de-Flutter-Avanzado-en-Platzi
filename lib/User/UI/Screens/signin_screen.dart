@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:platzi_trips_app/User/BLoC/bloc_user.dart';
+import 'package:platzi_trips_app/User/Model/user.dart';
 import 'package:platzi_trips_app/Widgets/button_green.dart';
 import 'package:platzi_trips_app/Widgets/gradient_back.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
@@ -37,7 +38,7 @@ class _SignInScreenState extends State<SignInScreen> {
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          GradientBack("",null),
+          GradientBack(height: null),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -51,7 +52,14 @@ class _SignInScreenState extends State<SignInScreen> {
               ButtonGreen(text: "Login with Gmail",
                 onPressed: (){
                 userBloc.signOut();
-                userBloc.signIn().then((FirebaseUser user) => print("EL usuario es: ${user.displayName}"));
+                userBloc.signIn().then((FirebaseUser user){
+                  userBloc.updateUserData(User(
+                    uid: user.uid,
+                    email: user.email,
+                    name: user.displayName,
+                    photoURL: user.photoUrl,
+                  ));
+                });
               }
               ,width: 300,
                 height: 50,
