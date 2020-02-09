@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:platzi_trips_app/Place/Model/place.dart';
 import 'package:platzi_trips_app/User/Model/user.dart';
 
 class CloudFirestoreAPI {
   final String USERS = "users";
-  final String PLACE = "places";
-
+  final String PLACES = "places";
   final Firestore _db = Firestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
 
   void updateUserData(User user) async {
     DocumentReference ref = _db.collection(USERS).document(user.uid);
@@ -18,5 +21,18 @@ class CloudFirestoreAPI {
       'myFavoritePlaces': user.myFavoritePlaces,
       'lastSignIn': DateTime.now()
     }, merge: true); //Sería como un commit
+  }
+
+  Future <void> updatePlaceDate(Place place) async{
+    CollectionReference refPlaces = _db.collection(PLACES);
+    await _auth.currentUser().then((FirebaseUser user){
+      refPlaces.add({
+            'name' : place.name,
+            'description' : place.description,
+            'url' : place.urlImage,
+            'likes' : place.likes,
+            'userOwner' : "${USERS}/${user.uid}"
+          });
+    });
   }
 }

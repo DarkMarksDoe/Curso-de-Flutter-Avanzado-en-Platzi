@@ -65,7 +65,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                   margin: EdgeInsets.only(bottom: 20.0),
                   alignment: Alignment.center,
                   child: CardImageWithFabIcon(
-                    pathImage: 'assets/img/beach_palm.jpeg',
+                    pathImage: widget.image.path,
                     width: 350.0,
                     left: 0.0,
                     onPressedFabIcon: () {  },
@@ -90,7 +90,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                     hintText: "Description",
                     inputType: TextInputType.multiline,
                     maxLines: 4,
-                    controller: _controllerTitlePlace,
+                    controller: _controllerDescriptionPlace,
                   ),
                 ),
                 Container(

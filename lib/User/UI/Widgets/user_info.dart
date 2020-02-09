@@ -24,24 +24,35 @@ class UserInfo extends StatelessWidget {
 
     final userInfo = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Container(
-            margin: EdgeInsets.only(bottom: 5.0),
-            child: Text(user.name,
+        Flexible(
+          child: Container(
+              width: MediaQuery.of(context).size.width * .50,
+              height: 20,
+              margin: EdgeInsets.only(bottom: 5.0),
+              child: Text(user.name,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontFamily: 'Lato',
+                  ))),
+        ),
+        Flexible(
+          child: Container(
+            width: MediaQuery.of(context).size.width * .50,
+            height: 20,
+            child: Text(user.email,
                 style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontFamily: 'Lato',
-                ))),
-        Text(user.email,
-            style: TextStyle(
-                fontSize: 15.0, color: Colors.white30, fontFamily: 'Lato')),
+                    fontSize: 15.0, color: Colors.white30, fontFamily: 'Lato')),
+          ),
+        )
       ],
     );
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 20.0, horizontal: 0.0),
+      margin: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
       child: Row(
         children: <Widget>[userPhoto, userInfo],
       ),
